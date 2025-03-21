@@ -18,13 +18,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Send message to start translation
+    // Start translation
     translateButton.addEventListener("click", () => {
-        chrome.runtime.sendMessage({ action: "startTranslation" }, (response) => {
-            console.log("Message sent to start translation.");
-            if (response && response.status) {
-                console.log("Response:", response.status);
-            }
+        chrome.storage.sync.get("language", (data) => {
+            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                chrome.tabs.sendMessage(tabs[0].id, { 
+                    action: "startTranslation", 
+                    language: data.language || "hindi" // Default to Hindi
+                });
+            });
         });
     });
 });
