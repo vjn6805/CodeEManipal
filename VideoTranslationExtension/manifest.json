@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Live Video Translator",
+  "version": "1.0",
+  "description": "Translates video audio in real-time.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["*://*/*"],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_popup": "public/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["src/content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+  {
+    "resources": ["src/style.css", "src/popup.js"],
+    "matches": ["<all_urls>"]
+  }
+]
+
+}
